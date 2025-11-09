@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấp Số Cộng - Toán 10</title>
+    <style>
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .theory-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .interactive-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            margin: 10px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 15px 0 10px;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .formula {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--success);
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .sequence-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .sequence-item {
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .sequence-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .visualization {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bar {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            width: 30px;
+            transition: height 0.5s;
+        }
+        
+        .quiz-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 10px;
+        }
+        
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            padding: 10px;
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+        }
+        
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CẤP SỐ CỘNG</h1>
+            <p class="subtitle">Khám phá và tương tác với dãy số đặc biệt này</p>
+        </header>
+        
+        <div class="content">
+            <section class="theory-section">
+                <h2>Lý Thuyết Cấp Số Cộng</h2>
+                
+                <h3>Định nghĩa</h3>
+                <p>Cấp số cộng là một dãy số (hữu hạn hoặc vô hạn) trong đó kể từ số hạng thứ hai, mỗi số hạng đều bằng số hạng đứng ngay trước nó cộng với một số không đổi d.</p>
+                
+                <div class="formula">
+                    u<sub>n</sub> = u<sub>n-1</sub> + d (với n ≥ 2)
+                </div>
+                
+                <p>Trong đó:</p>
+                <ul>
+                    <li>d được gọi là <strong>công sai</strong> của cấp số cộng</li>
+                    <li>u<sub>1</sub> là số hạng đầu tiên</li>
+                </ul>
+                
+                <h3>Số hạng tổng quát</h3>
+                <p>Nếu cấp số cộng (u<sub>n</sub>) có số hạng đầu u<sub>1</sub> và công sai d thì số hạng tổng quát u<sub>n</sub> được tính theo công thức:</p>
+                
+                <div class="formula">
+                    u<sub>n</sub> = u<sub>1</sub> + (n - 1) × d
+                </div>
+                
+                <h3>Tổng n số hạng đầu tiên</h3>
+                <p>Tổng của n số hạng đầu tiên của cấp số cộng được tính theo công thức:</p>
+                
+                <div class="formula">
+                    S<sub>n</sub> = n/2 × (u<sub>1</sub> + u<sub>n</sub>)<br>
+                    hoặc<br>
+                    S<sub>n</sub> = n/2 × [2u<sub>1</sub> + (n - 1)d]
+                </div>
+                
+                <div class="example">
+                    <h3>Ví dụ minh họa</h3>
+                    <p>Cho cấp số cộng: 2, 5, 8, 11, 14, ...</p>
+                    <ul>
+                        <li>Số hạng đầu: u<sub>1</sub> = 2</li>
+                        <li>Công sai: d = 3</li>
+                        <li>Số hạng thứ 10: u<sub>10</sub> = 2 + (10-1)×3 = 29</li>
+                        <li>Tổng 10 số hạng đầu: S<sub>10</sub> = 10/2 × (2 + 29) = 155</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="interactive-section">
+                <h2>Khám phá Cấp Số Cộng</h2>
+                
+                <div class="input-group">
+                    <label for="first-term">Số hạng đầu (u₁):</label>
+                    <input type="number" id="first-term" value="2">
+                </div>
+                
+                <div class="input-group">
+                    <label for="common-diff">Công sai (d):</label>
+                    <input type="number" id="common-diff" value="3">
+                </div>
+                
+                <div class="input-group">
+                    <label for="num-terms">Số lượng số hạng:</label>
+                    <input type="number" id="num-terms" value="10" min="1" max="20">
+                </div>
+                
+                <button id="generate-btn">Tạo dãy số</button>
+                <button id="calculate-sum">Tính tổng</button>
+                
+                <div class="result" id="sequence-result">
+                    <h3>Dãy số của bạn:</h3>
+                    <div class="sequence-display" id="sequence-display">
+                        <!-- Dãy số sẽ được hiển thị ở đây -->
+                    </div>
+                </div>
+                
+                <div class="result" id="sum-result" style="display: none;">
+                    <h3>Tổng các số hạng:</h3>
+                    <p id="sum-value"></p>
+                </div>
+                
+                <div class="visualization" id="visualization">
+                    <!-- Biểu đồ sẽ được hiển thị ở đây -->
+                </div>
+            </section>
+        </div>
+        
+        <section class="quiz-section">
+            <h2>Kiểm tra kiến thức</h2>
+            
+            <div class="quiz-question">
+                <p><strong>Câu 1:</strong> Cho cấp số cộng có u₁ = 3, d = 2. Số hạng thứ 5 là bao nhiêu?</p>
+                <div class="options">
+                    <div class="option" data-correct="false">9</div>
+                    <div class="option" data-correct="false">10</div>
+                    <div class="option" data-correct="true">11</div>
+                    <div class="option" data-correct="false">12</div>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p><strong>Câu 2:</strong> Cho cấp số cộng: 5, 9, 13, 17, ... Công sai của cấp số cộng này là?</p>
+                <div class="options">
+                    <div class="option" data-correct="false">3</div>
+                    <div class="option" data-correct="true">4</div>
+                    <div class="option" data-correct="false">5</div>
+                    <div class="option" data-correct="false">6</div>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            
+            <div class="quiz-question">
+                <p><strong>Câu 3:</strong> Tổng của 10 số hạng đầu tiên của cấp số cộng: 1, 3, 5, 7, ... là bao nhiêu?</p>
+                <div class="options">
+                    <div class="option" data-correct="false">90</div>
+                    <div class="option" data-correct="false">95</div>
+                    <div class="option" data-correct="false">100</div>
+                    <div class="option" data-correct="true">105</div>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            
+            <button id="check-answers">Kiểm tra kết quả</button>
+        </section>
+        
+        <footer>
+            <p>Ứng dụng học tập Cấp Số Cộng - Toán lớp 10</p>
+            <p>© 2023 - Tạo ra với ❤️ cho học sinh Việt Nam</p>
+        </footer>
+    </div>
+
+    <script>
+        // Các biến toàn cục
+        let currentSequence = [];
+        
+        // Khởi tạo ứng dụng
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tạo dãy số mặc định khi trang tải
+            generateSequence();
+            
+            // Gán sự kiện cho nút tạo dãy số
+            document.getElementById('generate-btn').addEventListener('click', generateSequence);
+            
+            // Gán sự kiện cho nút tính tổng
+            document.getElementById('calculate-sum').addEventListener('click', calculateSum);
+            
+            // Gán sự kiện cho các câu hỏi trắc nghiệm
+            setupQuiz();
+        });
+        
+        // Hàm tạo dãy số cộng
+        function generateSequence() {
+            const firstTerm = parseInt(document.getElementById('first-term').value);
+            const commonDiff = parseInt(document.getElementById('common-diff').value);
+            const numTerms = parseInt(document.getElementById('num-terms').value);
+            
+            // Tạo dãy số
+            currentSequence = [];
+            for (let i = 0; i < numTerms; i++) {
+                currentSequence.push(firstTerm + i * commonDiff);
+            }
+            
+            // Hiển thị dãy số
+            displaySequence();
+            
+            // Tạo biểu đồ trực quan
+            createVisualization();
+            
+            // Ẩn kết quả tổng nếu có
+            document.getElementById('sum-result').style.display = 'none';
+        }
+        
+        // Hiển thị dãy số
+        function displaySequence() {
+            const sequenceDisplay = document.getElementById('sequence-display');
+            sequenceDisplay.innerHTML = '';
+            
+            currentSequence.forEach((term, index) => {
+                const termElement = document.createElement('div');
+                termElement.className = 'sequence-item';
+                termElement.textContent = term;
+                termElement.title = `Số hạng thứ ${index + 1}: ${term}`;
+                sequenceDisplay.appendChild(termElement);
+            });
+        }
+        
+        // Tạo biểu đồ trực quan
+        function createVisualization() {
+            const visualization = document.getElementById('visualization');
+            visualization.innerHTML = '';
+            
+            const maxValue = Math.max(...currentSequence);
+            const minValue = Math.min(...currentSequence);
+            const range = maxValue - minValue;
+            const barWidth = 30;
+            const spacing = 10;
+            const totalWidth = currentSequence.length * (barWidth + spacing);
+            
+            // Đặt chiều rộng cho container biểu đồ
+            visualization.style.width = `${totalWidth}px`;
+            
+            currentSequence.forEach((term, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                
+                // Tính chiều cao của thanh (tối đa 180px)
+                const height = range === 0 ? 90 : ((term - minValue) / range) * 180;
+                bar.style.height = `${height}px`;
+                
+                // Đặt vị trí ngang
+                bar.style.left = `${index * (barWidth + spacing)}px`;
+                bar.style.width = `${barWidth}px`;
+                
+                // Thêm nhãn giá trị
+                const label = document.createElement('div');
+                label.textContent = term;
+                label.style.position = 'absolute';
+                label.style.top = '-25px';
+                label.style.left = '0';
+                label.style.width = '100%';
+                label.style.textAlign = 'center';
+                label.style.fontWeight = 'bold';
+                label.style.color = 'var(--dark)';
+                
+                bar.appendChild(label);
+                visualization.appendChild(bar);
+            });
+        }
+        
+        // Tính tổng các số hạng
+        function calculateSum() {
+            const firstTerm = currentSequence[0];
+            const lastTerm = currentSequence[currentSequence.length - 1];
+            const numTerms = currentSequence.length;
+            
+            // Tính tổng theo công thức S = n/2 * (u1 + un)
+            const sum = numTerms / 2 * (firstTerm + lastTerm);
+            
+            // Hiển thị kết quả
+            document.getElementById('sum-value').textContent = 
+                `S${numTerms} = ${numTerms}/2 × (${firstTerm} + ${lastTerm}) = ${sum}`;
+            document.getElementById('sum-result').style.display = 'block';
+        }
+        
+        // Thiết lập phần trắc nghiệm
+        function setupQuiz() {
+            // Gán sự kiện cho các lựa chọn
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Xóa lựa chọn trước đó trong cùng câu hỏi
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.option');
+                    siblings.forEach(sib => sib.classList.remove('selected'));
+                    
+                    // Đánh dấu lựa chọn hiện tại
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Gán sự kiện cho nút kiểm tra kết quả
+            document.getElementById('check-answers').addEventListener('click', checkQuizAnswers);
+        }
+        
+        // Kiểm tra đáp án trắc nghiệm
+        function checkQuizAnswers() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correctCount = 0;
+            
+            questions.forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        feedback.textContent = 'Chính xác! 🎉';
+                        feedback.className = 'feedback correct';
+                        correctCount++;
+                    } else {
+                        feedback.textContent = 'Chưa đúng. Hãy thử lại!';
+                        feedback.className = 'feedback incorrect';
+                    }
+                    
+                    feedback.style.display = 'block';
+                } else {
+                    const feedback = question.querySelector('.feedback');
+                    feedback.textContent = 'Vui lòng chọn một đáp án!';
+                    feedback.className = 'feedback incorrect';
+                    feedback.style.display = 'block';
+                }
+            });
+            
+            // Hiển thị kết quả tổng thể
+            if (correctCount === questions.length) {
+                alert(`Tuyệt vời! Bạn đã trả lời đúng tất cả ${questions.length} câu hỏi! 🎊`);
+            } else {
+                alert(`Bạn đã trả lời đúng ${correctCount} trên ${questions.length} câu hỏi. Tiếp tục cố gắng nhé! 💪`);
+            }
+        }
+    </script>
+</body>
+</html>
